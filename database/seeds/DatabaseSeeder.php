@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        \Illuminate\Support\Facades\Artisan::call('doctrine:schema:drop --force');
+        \Illuminate\Support\Facades\Artisan::call('doctrine:schema:create');
+
+        // TODO: Make Seeders
+
+        echo 'success';
     }
 }
