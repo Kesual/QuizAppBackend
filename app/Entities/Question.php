@@ -21,14 +21,22 @@ class Question implements JsonSerializable
     /** @ORM\Column(type="string") */
     private $value;
     /**
-     * @ORM\ManyToOne(targetEntity="Quiz")
+     * @ORM\ManyToOne(targetEntity="Quiz", fetch="EAGER")
      */
     private $quiz;
     /**
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="id")
+     * @ORM\ManyToOne(targetEntity="QuestionType", fetch="EAGER")
+     */
+    private $questionType;
+    /**
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
      */
     private $answer;
 
+    /**
+     * Question constructor.
+     * @param $answer
+     */
     public function __construct()
     {
         $this->answer = new ArrayCollection();
@@ -67,6 +75,22 @@ class Question implements JsonSerializable
     }
 
     /**
+     * @return mixed
+     */
+    public function getQuiz()
+    {
+        return $this->quiz;
+    }
+
+    /**
+     * @param mixed $quiz
+     */
+    public function setQuiz($quiz): void
+    {
+        $this->quiz = $quiz;
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getAnswer(): ArrayCollection
@@ -83,6 +107,22 @@ class Question implements JsonSerializable
     }
 
     /**
+     * @return mixed
+     */
+    public function getQuestionType()
+    {
+        return $this->questionType;
+    }
+
+    /**
+     * @param mixed $questionType
+     */
+    public function setQuestionType($questionType): void
+    {
+        $this->questionType = $questionType;
+    }
+
+    /**
      * Specify data which should be serialized to JSON
      * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -94,6 +134,7 @@ class Question implements JsonSerializable
         return [
             'id' => $this->id,
             'value' => $this->value,
+            'questionType' => $this->questionType,
             'answer' => $this->answer->toArray(),
         ];
     }

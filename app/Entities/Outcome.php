@@ -6,10 +6,11 @@ namespace App\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/** @ORM\Entity
- *  @ORM\Table(name="answertype")
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="outcome")
  */
-class AnswerType implements JsonSerializable
+class Outcome implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -17,10 +18,10 @@ class AnswerType implements JsonSerializable
      * @ORM\GeneratedValue
      */
     private $id;
-    /** @ORM\Column(type="string") */
-    private $type;
+    /** @ORM\Column(type="boolean") */
+    private $value;
     /**
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="answerType")
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="outcome")
      */
     private $answer;
 
@@ -43,17 +44,17 @@ class AnswerType implements JsonSerializable
     /**
      * @return mixed
      */
-    public function getType()
+    public function getValue()
     {
-        return $this->type;
+        return $this->value;
     }
 
     /**
-     * @param mixed $type
+     * @param mixed $value
      */
-    public function setType($type): void
+    public function setValue($value): void
     {
-        $this->type = $type;
+        $this->value = $value;
     }
 
     /**
@@ -83,7 +84,7 @@ class AnswerType implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'type' => $this->type
+            'type' => $this->value
         ];
     }
 }

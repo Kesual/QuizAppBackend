@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,10 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \Illuminate\Support\Facades\Artisan::call('doctrine:schema:drop --force');
-        \Illuminate\Support\Facades\Artisan::call('doctrine:schema:create');
+        Artisan::call('doctrine:schema:drop --force');
+        Artisan::call('doctrine:schema:create');
 
-        // TODO: Make Seeders
+        Artisan::call('db:seed --class=QuestionTypeSeeder');
+        Artisan::call('db:seed --class=OutcomeSeeder');
+        Artisan::call('db:seed --class=QuizSeeder');
+        Artisan::call('db:seed --class=QuestionSeeder');
+        Artisan::call('db:seed --class=AnswerSeeder');
 
         echo 'success';
     }

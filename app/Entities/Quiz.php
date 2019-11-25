@@ -25,6 +25,10 @@ class Quiz implements JsonSerializable
      */
     private $question;
 
+    /**
+     * Quiz constructor.
+     * @param $question
+     */
     public function __construct()
     {
         $this->question = new ArrayCollection();
@@ -67,6 +71,7 @@ class Quiz implements JsonSerializable
      */
     public function getQuestion(): ArrayCollection
     {
+        //$this->question = new ArrayCollection();
         return $this->question;
     }
 
@@ -74,6 +79,12 @@ class Quiz implements JsonSerializable
      * @param ArrayCollection $question
      */
     public function setQuestion(ArrayCollection $question): void
+    {
+        //$this->question = new ArrayCollection();
+        $this->question = $question;
+    }
+
+    public function addQuestion($question): void
     {
         $this->question = $question;
     }
@@ -83,7 +94,7 @@ class Quiz implements JsonSerializable
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'question' => $this->question->toArray()
+            'question' => $this->question->toArray(),
         ];
     }
 }

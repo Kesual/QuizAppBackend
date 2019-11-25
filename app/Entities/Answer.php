@@ -20,24 +20,14 @@ class Answer implements JsonSerializable
     private $id;
     /** @ORM\Column(type="string") */
     private $value;
-    /** @ORM\Column(type="boolean") */
+    /**
+     * @ORM\ManyToOne(targetEntity="Outcome", fetch="EAGER")
+     */
     private $outcome;
     /**
-     * @ORM\ManyToOne(targetEntity="AnswerType")
-     */
-    private $answerType;
-    /**
-     * @ORM\ManyToOne(targetEntity="Question")
+     * @ORM\ManyToOne(targetEntity="Question", fetch="EAGER")
      */
     private $question;
-
-    /**
-     * Answer constructor.
-     */
-    public function __construct()
-    {
-        $this->answerType = new ArrayCollection();
-    }
 
     /**
      * @return mixed
@@ -88,22 +78,6 @@ class Answer implements JsonSerializable
     }
 
     /**
-     * @return ArrayCollection
-     */
-    public function getAnswerType(): ArrayCollection
-    {
-        return $this->answerType;
-    }
-
-    /**
-     * @param ArrayCollection $answerType
-     */
-    public function setAnswerType(ArrayCollection $answerType): void
-    {
-        $this->answerType = $answerType;
-    }
-
-    /**
      * @return mixed
      */
     public function getQuestion()
@@ -133,7 +107,6 @@ class Answer implements JsonSerializable
             'id' => $this->id,
             'value' => $this->value,
             'outcome' => $this->outcome,
-            'answerType' => $this->answerType->toArray(),
         ];
     }
 }
