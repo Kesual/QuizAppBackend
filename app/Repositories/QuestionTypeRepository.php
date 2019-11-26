@@ -57,7 +57,7 @@ class QuestionTypeRepository
         }
     }
 
-    public function findMsgById($id)
+    public function findQTById($id)
     {
         return $this->em->getRepository($this->class)->findOneBy([
             'id' => $id

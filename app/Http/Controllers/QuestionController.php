@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Answer;
+use App\Entities\Outcome;
 use App\Entities\Question;
+use App\Entities\QuestionType;
 use App\Entities\Quiz;
 use App\Repositories\QuestionRepository as repo;
+use App\Repositories\AnswerRepository as AnsweRepo;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,10 +17,12 @@ class QuestionController extends Controller
 {
     private $repo;
     private $em;
+    private $aRepo;
 
-    public function __construct(repo $repo, EntityManager $em) {
+    public function __construct(repo $repo, EntityManager $em, AnsweRepo $aRepo) {
         $this->repo = $repo;
         $this->em = $em;
+        $this->aRepo = $aRepo;
     }
     /**
      * Display a listing of the resource.
@@ -42,24 +48,31 @@ class QuestionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function store(Request $request)
     {
         $content = $request->input('data');
-        $id = $request->input('id');
 
         $newQuestion = new Question();
 
-        $quiz = $this->em->getRepository(Quiz::class)->find($id);
-
-        // TODO: create Question
+        $quiz = $this->em->getRepository(Quiz::class)->find($request->input('id'));
+        $type = $this->em->getRepository(QuestionType::class)->find($content['type']);
 
         $newQuestion->setQuiz($quiz);
-        $newQuestion->setQuestionType();
-        $newQuestion->setValue();
-
+        $newQuestion->setQuestionType($type);
+        $newQuestion->setValue($content['question']);
         $this->repo->create($newQuestion);
+
+        $newAnswer = new Answer();
+
+        $outcome = $this->em->getRepository(Outcome::class)->find($content['outcome']);
+
+        $newAnswer->setQuestion($newQuestion);
+        $newAnswer->setOutcome($outcome);
+        $newAnswer->setValue($content['answer']);
+
+        $this->aRepo->create($newAnswer);
 
         return  $array = [['value' => $request->input('data'), 'id' => $request->input('id')]];
     }

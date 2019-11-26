@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         Artisan::call('db:seed --class=QuestionTypeSeeder');
         Artisan::call('db:seed --class=OutcomeSeeder');
         Artisan::call('db:seed --class=QuizSeeder');
-        Artisan::call('db:seed --class=QuestionSeeder');
-        Artisan::call('db:seed --class=AnswerSeeder');
+        //Artisan::call('db:seed --class=QuestionSeeder');
+        //Artisan::call('db:seed --class=AnswerSeeder');
 
         echo 'success';
     }

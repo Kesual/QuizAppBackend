@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/** @ORM\Entity
- *  @ORM\Table(name="quiz")
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="quiz")
+ *
+ * es wäre noch (repositoryClass="App\Repositories\QuizRepository") hinter entity möglich, aber dann ändert sich der EntityManager
  */
 class Quiz implements JsonSerializable
 {

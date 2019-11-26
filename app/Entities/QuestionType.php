@@ -6,8 +6,9 @@ namespace App\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/** @ORM\Entity
- *  @ORM\Table(name="questiontype")
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="questiontype")
  */
 class QuestionType implements JsonSerializable
 {
