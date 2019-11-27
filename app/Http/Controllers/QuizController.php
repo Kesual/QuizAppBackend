@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Quiz;
 use App\Repositories\QuizRepository as repo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -38,11 +39,18 @@ class QuizController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function store(Request $request)
     {
-        //
+        $content = $request->get('data');
+
+        $newQuiz = new Quiz();
+
+        $newQuiz->setName($content['quiz']);
+
+        $this->repo->create($newQuiz);
+        return ['success' => $request->input('data')];
     }
 
     /**
