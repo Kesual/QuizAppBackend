@@ -119,6 +119,6 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return ['response' => $this->repo->delete($this->repo->findById($id))];
     }
 }

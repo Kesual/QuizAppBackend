@@ -56,6 +56,7 @@ class QuestionRepository
         } catch (ORMException $e) {
             echo $e;
         }
+        return 'success';
     }
 
     public function findById($id)
@@ -78,6 +79,7 @@ class QuestionRepository
         } catch (ORMException $e) {
             echo $e;
         }
+        return 'success';
     }
 
     public function getAll()

@@ -29,7 +29,7 @@ class Question implements JsonSerializable
      */
     private $questionType;
     /**
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question", cascade={"all"})
      */
     private $answer;
 

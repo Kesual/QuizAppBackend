@@ -24,7 +24,7 @@ class Quiz implements JsonSerializable
     /** @ORM\Column(type="string") */
     private $name;
     /**
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="quiz")
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="quiz", cascade={"all"})
      */
     private $question;
 

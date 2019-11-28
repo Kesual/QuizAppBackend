@@ -80,21 +80,25 @@ class QuizController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function update(Request $request, $id)
     {
-        //
+        $content = $request->get('data');
+
+        $updateQuiz = $this->repo->findQuizById($id);
+
+        return ['response' =>$this->repo->update($updateQuiz, $content)];
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function destroy($id)
     {
-        //
+        return ['response' => $this->repo->delete($this->repo->findQuizById($id))];
     }
 }

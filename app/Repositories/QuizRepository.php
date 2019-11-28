@@ -55,6 +55,7 @@ class QuizRepository
         } catch (ORMException $e) {
             echo $e;
         }
+        return 'success';
     }
 
     public function findQuizById($id)
@@ -73,11 +74,13 @@ class QuizRepository
         }
         try {
             $this->em->flush();
+
         } catch (OptimisticLockException $e) {
             echo $e;
         } catch (ORMException $e) {
             echo $e;
         }
+        return 'success';
     }
 
     public function getAll() {
