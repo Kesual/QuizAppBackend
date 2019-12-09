@@ -19,7 +19,7 @@ class Answer implements JsonSerializable
      * @ORM\GeneratedValue
      */
     private $id;
-    /** @ORM\Column(type="string") */
+    /** @ORM\Column(type="string", length=500) */
     private $value;
     /**
      * @ORM\ManyToOne(targetEntity="Outcome", fetch="EAGER")

@@ -64,15 +64,16 @@ class QuestionController extends Controller
         $newQuestion->setValue($content['question']);
         $this->repo->create($newQuestion);
 
-        $newAnswer = new Answer();
+        foreach ($content['answers'] as $a)
+        {
+            $newAnswer = new Answer();
+            $outcome = $this->em->getRepository(Outcome::class)->find($a['outcome']);
 
-        $outcome = $this->em->getRepository(Outcome::class)->find($content['outcome']);
-
-        $newAnswer->setQuestion($newQuestion);
-        $newAnswer->setOutcome($outcome);
-        $newAnswer->setValue($content['answer']);
-
-        $this->aRepo->create($newAnswer);
+            $newAnswer->setQuestion($newQuestion);
+            $newAnswer->setOutcome($outcome);
+            $newAnswer->setValue($a['answer']);
+            $this->aRepo->create($newAnswer);
+        }
 
         return  $array = [['value' => $request->input('data'), 'id' => $request->input('id')]];
     }

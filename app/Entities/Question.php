@@ -18,7 +18,7 @@ class Question implements JsonSerializable
      * @ORM\GeneratedValue
      */
     private $id;
-    /** @ORM\Column(type="string") */
+    /** @ORM\Column(type="string", length=400) */
     private $value;
     /**
      * @ORM\ManyToOne(targetEntity="Quiz", fetch="EAGER")
