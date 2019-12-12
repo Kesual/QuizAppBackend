@@ -4,6 +4,7 @@
 namespace App\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -29,7 +30,7 @@ class Question implements JsonSerializable
      */
     private $questionType;
     /**
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question", cascade={"persist"}, orphanRemoval=true)
      */
     private $answer;
 
@@ -91,9 +92,9 @@ class Question implements JsonSerializable
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getAnswer(): ArrayCollection
+    public function getAnswer(): Collection
     {
         return $this->answer;
     }
@@ -104,6 +105,11 @@ class Question implements JsonSerializable
     public function setAnswer(ArrayCollection $answer): void
     {
         $this->answer = $answer;
+    }
+
+    public function removeAnswers()
+    {
+        $this->getAnswer()->clear();
     }
 
     /**

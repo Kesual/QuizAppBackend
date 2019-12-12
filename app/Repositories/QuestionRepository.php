@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Entities\Question;
+use App\Entities\QuestionType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -42,8 +43,9 @@ class QuestionRepository
 
     public function update(Question $q, $data)
     {
-        $q->setValue($data['value']);
-        $q->setQuiz($data['quiz']);
+        $type = $this->em->getRepository(QuestionType::class)->find($data['type']);
+        $q->setValue($data['question']);
+        $q->setQuestionType($type);
         try {
             $this->em->persist($q);
         } catch (ORMException $e) {

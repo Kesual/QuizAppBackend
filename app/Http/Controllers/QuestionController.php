@@ -9,7 +9,9 @@ use App\Entities\QuestionType;
 use App\Entities\Quiz;
 use App\Repositories\QuestionRepository as repo;
 use App\Repositories\AnswerRepository as AnsweRepo;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use http\QueryString;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -105,18 +107,34 @@ class QuestionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function update(Request $request, $id)
     {
-        //
+        $content = $request->input('data');
+        $question = $this->repo->findById($id);
+        $question->removeAnswers();
+        $result = $this->repo->update($question, $content);
+
+        foreach ($content['answers'] as $a)
+        {
+            $newAnswer = new Answer();
+            $outcome = $this->em->getRepository(Outcome::class)->find($a['outcome']);
+
+            $newAnswer->setQuestion($question);
+            $newAnswer->setOutcome($outcome);
+            $newAnswer->setValue($a['answer']);
+            $this->aRepo->create($newAnswer);
+        }
+
+        return  $array = [['value' => $request->input('data'), 'result' => $result]];
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function destroy($id)
     {
